@@ -11,7 +11,21 @@ export const productsSlice= createSlice({
     budget:100000000000,
     initialMoney:100000000000,
   },
-  reducers: {}
+  reducers: {
+    updateCount:(state,action)=>{
+      const {id, count} = action.payload;
+      const product=state.items.find((item)=>item.id === id )
+      product.count= count;
+
+      let price=0;
+      state.items.map((product)=>{
+      price += Number(product.count)*Number(product.productPrice)})
+
+     state.budget=Number(state.initialMoney)-Number(price)
+    }
+  }
 })
 
+
+export const {updateCount} = productsSlice.actions;
 export default productsSlice.reducer;
